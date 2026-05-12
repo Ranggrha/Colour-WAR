@@ -1,0 +1,17 @@
+{
+  "name": "colour-war-server",
+  "version": "1.0.0",
+  "module": "src/server.ts",
+  "scripts": {
+    "dev": "bun --hot src/server.ts",
+    "start": "bun src/server.ts",
+    "kill": "powershell -Command \"Stop-Process -Id (Get-NetTCPConnection -LocalPort 3001 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique) -Force -ErrorAction SilentlyContinue; Write-Host 'Port 3001 freed'\"",
+    "fresh": "bun run kill && bun run dev"
+  },
+  "dependencies": {
+    "hono": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Global Reset & Base ───────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --bg: #F5F0E8;
+  --black: #0D0D0D;
+  --white: #FFFFFF;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  color: var(--black);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Neo-Brutalism Utility Classes ─────────────────────────────────────────── */
+@layer components {
+  .nb-card {
+    @apply bg-white border-2 border-black rounded-none shadow-brutal;
+  }
+
+  .nb-btn {
+    @apply font-bold border-2 border-black shadow-brutal
+           active:translate-x-[4px] active:translate-y-[4px] active:shadow-none
+           transition-all duration-75 cursor-pointer select-none
+           touch-none;
+  }
+
+  .nb-btn-primary {
+    @apply nb-btn bg-brand-yellow text-black px-6 py-3 text-base;
+  }
+
+  .nb-btn-secondary {
+    @apply nb-btn bg-white text-black px-6 py-3 text-base;
+  }
+
+  .nb-btn-danger {
+    @apply nb-btn bg-game-red text-white px-6 py-3 text-base;
+  }
+
+  .nb-input {
+    @apply w-full border-2 border-black bg-white px-4 py-3 text-base font-semibold
+           outline-none focus:ring-2 focus:ring-black focus:ring-offset-2
+           placeholder:text-gray-400 shadow-brutal-sm;
+  }
+
+  .nb-badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 border-2 border-black
+           text-xs font-bold shadow-brutal-sm;
+  }
+}
+
+/* ── Game Color Classes (all 8 colors) ──────────────────────────────────────── */
+.color-MERAH      { color: #FF2D55; }
+.color-HIJAU      { color: #00C851; }
+.color-BIRU       { color: #007AFF; }
+.color-KUNING     { color: #FFD60A; }
+.color-UNGU       { color: #7C3AED; }
+.color-ORANYE     { color: #F97316; }
+.color-MERAH_MUDA { color: #EC4899; }
+.color-TOSCA      { color: #0891B2; }
+
+.bg-MERAH      { background-color: #FF2D55; }
+.bg-HIJAU      { background-color: #00C851; }
+.bg-BIRU       { background-color: #007AFF; }
+.bg-KUNING     { background-color: #FFD60A; }
+.bg-UNGU       { background-color: #7C3AED; }
+.bg-ORANYE     { background-color: #F97316; }
+.bg-MERAH_MUDA { background-color: #EC4899; }
+.bg-TOSCA      { background-color: #0891B2; }
+
+/* ── Scrollbar Styling ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--black); }
+
+/* ── Touch action for game buttons ─────────────────────────────────────────── */
+.game-btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
