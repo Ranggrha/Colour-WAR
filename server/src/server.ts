@@ -8,9 +8,9 @@ type ColorName = (typeof ALL_COLORS)[number];
 type ColorMode = "klasik" | "menengah" | "sulit";
 
 const COLOR_POOLS: Record<ColorMode, ColorName[]> = {
-  klasik:   ["MERAH", "HIJAU", "BIRU", "KUNING"],
+  klasik: ["MERAH", "HIJAU", "BIRU", "KUNING"],
   menengah: ["MERAH", "HIJAU", "BIRU", "KUNING", "UNGU", "ORANYE"],
-  sulit:    ["MERAH", "HIJAU", "BIRU", "KUNING", "UNGU", "ORANYE", "MERAH_MUDA", "TOSCA"],
+  sulit: ["MERAH", "HIJAU", "BIRU", "KUNING", "UNGU", "ORANYE", "MERAH_MUDA", "TOSCA"],
 };
 
 interface Question {
@@ -163,7 +163,11 @@ function removePlayer(playerId: string) {
 // ─── Hono HTTP ────────────────────────────────────────────────────────────────
 
 const app = new Hono();
-app.use("*", cors({ origin: "*", allowMethods: ["GET", "POST", "OPTIONS"] }));
+app.use('*', cors({
+  origin: 'https://colour-war.vercel.app',
+  allowMethods: ['GET', 'POST', 'OPTIONS'],
+  allowHeaders: ['Content-Type'],
+}))
 
 app.get("/api/rooms", (c) => {
   const publicRooms = Array.from(rooms.values())
@@ -184,7 +188,7 @@ const wsHandler: import("bun").WebSocketHandler<WSData> = {
   },
 
   message(ws, rawMsg) {
-    let msg: { type: string; [key: string]: unknown };
+    let msg: { type: string;[key: string]: unknown };
     try {
       msg = JSON.parse(typeof rawMsg === "string" ? rawMsg : rawMsg.toString());
     } catch { return; }
