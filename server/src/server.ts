@@ -334,10 +334,12 @@ const wsHandler: import("bun").WebSocketHandler<WSData> = {
 // ─── Start Server ─────────────────────────────────────────────────────────────
 
 const PORT = Number(process.env.PORT) || 3001;
-console.log(`🚀 Colour WAR server running on http://localhost:${PORT}`);
+const HOST = "0.0.0.0";
+console.log(`🚀 Colour WAR server running on http://${HOST}:${PORT}`);
 
 export default {
   port: PORT,
+  hostname: HOST,
   fetch(req: Request, server: import("bun").Server) {
     const url = new URL(req.url);
     if (url.pathname === "/ws") {
