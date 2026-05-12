@@ -1,5 +1,5 @@
-# Use official Bun image
-FROM oven/bun:1.1 AS base
+# Use official Bun image (1.2+ required for bun.lock text format)
+FROM oven/bun:latest AS base
 WORKDIR /app
 
 # Install dependencies
@@ -9,7 +9,7 @@ RUN bun install
 # Copy source
 COPY . .
 
-# Expose port
+# Expose port (Railway will override via $PORT env var)
 EXPOSE 3001
 
 # Run server
