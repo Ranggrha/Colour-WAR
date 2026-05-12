@@ -162,11 +162,26 @@ function removePlayer(playerId: string) {
 
 // ─── Hono HTTP ────────────────────────────────────────────────────────────────
 
+const ALLOWED_ORIGINS = [
+  'https://colour-war.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:4173',
+];
+
+function isAllowedOrigin(origin: string | null): boolean {
+  if (!origin) return true;
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Allow all Vercel preview deployments for this project
+  if (origin.match(/^https:\/\/colour-war[\w-]*\.vercel\.app$/)) return true;
+  return false;
+}
+
 const app = new Hono();
 app.use('*', cors({
-  origin: 'https://colour-war.vercel.app',
+  origin: (origin) => isAllowedOrigin(origin) ? origin : '',
   allowMethods: ['GET', 'POST', 'OPTIONS'],
   allowHeaders: ['Content-Type'],
+  credentials: true,
 }))
 
 app.get("/api/rooms", (c) => {
@@ -326,6 +341,10 @@ export default {
   fetch(req: Request, server: import("bun").Server) {
     const url = new URL(req.url);
     if (url.pathname === "/ws") {
+      const origin = req.headers.get('origin');
+      if (!isAllowedOrigin(origin)) {
+        return new Response("Origin not allowed", { status: 403 });
+      }
       const upgraded = server.upgrade(req, { data: { playerId: "", roomId: "" } satisfies WSData });
       if (upgraded) return undefined;
       return new Response("WebSocket upgrade failed", { status: 400 });
